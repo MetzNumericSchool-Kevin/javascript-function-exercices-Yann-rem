@@ -22,3 +22,11 @@ const salutations = (nom) => {
 };
 
 salutations(nom_sorcier);
+
+// Exercice 2 : Quel est le tarif d'une potion ?
+const tarif = (id, inventaire, quantite = 1) => {
+  const potion = inventaire.find((p) => p.id === id);
+  return potion ? potion.prix * quantite : 0;
+};
+
+console.log(tarif("potion_soin", inventaire, 3));
