@@ -40,3 +40,20 @@ console.log(fabrication("potion_mana", 10, 5));
 console.log(fabrication("potion_endurance", 5, 10));
 console.log(fabrication("potion_vitesse", 10, 15));
 console.log(fabrication("potion_force", 15, 8));
+
+// Exercice 4 : Ajout de nouvelles potions dans l'inventaire
+const ajouter = (inventaire, nouvelle_potion) => {
+  const index = inventaire.findIndex((p) => p.id === nouvelle_potion.id);
+
+  index !== -1
+    ? ((inventaire[index].stock += nouvelle_potion.stock), (inventaire[index].prix = nouvelle_potion.prix))
+    : inventaire.push(nouvelle_potion);
+
+  inventaire.sort((a, b) => b.prix - a.prix);
+};
+
+ajouter(inventaire, fabrication("potion_soin", 14, 5));
+ajouter(inventaire, fabrication("potion_mana", 10, 5));
+ajouter(inventaire, fabrication("potion_endurance", 8, 10));
+ajouter(inventaire, fabrication("potion_vitesse", 12, 15));
+ajouter(inventaire, fabrication("potion_force", 15, 8));
