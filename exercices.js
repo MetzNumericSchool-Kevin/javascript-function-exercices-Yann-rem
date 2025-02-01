@@ -30,3 +30,13 @@ const tarif = (id, inventaire, quantite = 1) => {
 };
 
 console.log(tarif("potion_soin", inventaire, 3));
+
+// Exercice 3 : Fabrication de potion
+const fabrication = (id, prix = 10, stock = 1) => {
+  return { id, prix, stock };
+};
+
+console.log(fabrication("potion_mana", 10, 5));
+console.log(fabrication("potion_endurance", 5, 10));
+console.log(fabrication("potion_vitesse", 10, 15));
+console.log(fabrication("potion_force", 15, 8));
