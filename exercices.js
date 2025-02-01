@@ -56,4 +56,17 @@ ajouter(inventaire, fabrication("potion_soin", 14, 5));
 ajouter(inventaire, fabrication("potion_mana", 10, 5));
 ajouter(inventaire, fabrication("potion_endurance", 8, 10));
 ajouter(inventaire, fabrication("potion_vitesse", 12, 15));
-ajouter(inventaire, fabrication("potion_force", 15, 8));
+ajouter(inventaire, fabrication("potion_force", 15, 0));
+
+// Exercice 5 : Cherche moi les potions qui...
+const lister_potions_disponibles = () => {
+  return inventaire.filter((p) => p.stock > 0);
+};
+
+const lister_potions_indisponibles = () => {
+  return inventaire.filter((p) => p.stock === 0);
+};
+
+console.table(inventaire);
+console.table(lister_potions_disponibles());
+console.table(lister_potions_indisponibles());
