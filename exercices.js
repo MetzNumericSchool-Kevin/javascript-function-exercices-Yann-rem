@@ -179,11 +179,13 @@ fabriquerPotion(
 */
 
 // Exercice 9 : Epreuve ultime, la fabrication de plusieurs inventaires indépendants
+
+/*
 const creationInventaire = () => {
   const inventaire = [];
 
   return {
-    ajouterPotion(potion) {
+    AjouterPotion(potion) {
       const index = inventaire.findIndex((p) => p.id === potion.id);
 
       index !== -1
@@ -211,6 +213,53 @@ inventaireBoutiquePotionsA.ajouterPotion({ id: "potion_mana", stock: 3 });
 
 inventaireBoutiquePotionsB.ajouterPotion({ id: "potion_soin", stock: 0 });
 inventaireBoutiquePotionsB.ajouterPotion({ id: "potion_force", stock: 7 });
+
+console.log("Inventaire A - Potions en stock:");
+console.table(inventaireBoutiquePotionsA.PotionsEnStock());
+
+console.log("Inventaire A - Potions en rupture:");
+console.table(inventaireBoutiquePotionsA.PotionsEnRuptureDeStock());
+
+console.log("Inventaire B - Potions en stock:");
+console.table(inventaireBoutiquePotionsB.PotionsEnStock());
+
+console.log("Inventaire B - Potions en rupture:");
+console.table(inventaireBoutiquePotionsB.PotionsEnRuptureDeStock());
+*/
+
+// Bonus : un sorcier a toujours la classe !
+class Inventaire {
+  constructor() {
+    this.inventaire = [];
+  }
+
+  AjouterPotion(potion) {
+    const index = inventaire.findIndex((p) => p.id === potion.id);
+
+    index !== -1
+      ? ((inventaire[index].stock += potion.stock), (inventaire[index].prix = potion.prix))
+      : inventaire.push(potion);
+
+    inventaire.sort((a, b) => b.prix - a.prix);
+  }
+
+  PotionsEnStock() {
+    return inventaire.filter((potion) => potion.stock > 0);
+  }
+
+  PotionsEnRuptureDeStock() {
+    return inventaire.filter((potion) => potion.stock === 0);
+  }
+}
+
+const inventaireBoutiquePotionsA = new Inventaire();
+const inventaireBoutiquePotionsB = new Inventaire();
+
+inventaireBoutiquePotionsA.AjouterPotion({ id: "potion_soin", stock: 5 });
+inventaireBoutiquePotionsA.AjouterPotion({ id: "potion_mana", stock: 3 });
+
+inventaireBoutiquePotionsB.AjouterPotion({ id: "potion_soin", stock: 0 });
+inventaireBoutiquePotionsB.AjouterPotion({ id: "potion_force", stock: 7 });
 
 console.log("Inventaire A - Potions en stock:");
 console.table(inventaireBoutiquePotionsA.PotionsEnStock());
