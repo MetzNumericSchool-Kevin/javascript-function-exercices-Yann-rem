@@ -140,6 +140,8 @@ console.table(inventaire);
 
 // Exercice 8 : Une potion n'est jamais fabriquée en retard, ni en avance d'ailleurs. Elle est fabriquée précisément
 // à l'heure prévue !
+
+/*
 const potionEstFinie = (potion) => {
   console.log("Fabrication de la potion finie :", potion);
   ajouter(inventaire, potion);
@@ -174,3 +176,50 @@ fabriquerPotion(
   { id: "potion_soin", stock: 8, ingredients: ["eau_de_source", "ecaille_de_dragon", "poudre_de_diamant"] },
   potionEstFinie
 );
+*/
+
+// Exercice 9 : Epreuve ultime, la fabrication de plusieurs inventaires indépendants
+const creationInventaire = () => {
+  const inventaire = [];
+
+  return {
+    ajouterPotion(potion) {
+      const index = inventaire.findIndex((p) => p.id === potion.id);
+
+      index !== -1
+        ? ((inventaire[index].stock += potion.stock), (inventaire[index].prix = potion.prix))
+        : inventaire.push(potion);
+
+      inventaire.sort((a, b) => b.prix - a.prix);
+    },
+
+    PotionsEnStock() {
+      return inventaire.filter((potion) => potion.stock > 0);
+    },
+
+    PotionsEnRuptureDeStock() {
+      return inventaire.filter((potion) => potion.stock === 0);
+    },
+  };
+};
+
+const inventaireBoutiquePotionsA = creationInventaire();
+const inventaireBoutiquePotionsB = creationInventaire();
+
+inventaireBoutiquePotionsA.ajouterPotion({ id: "potion_soin", stock: 5 });
+inventaireBoutiquePotionsA.ajouterPotion({ id: "potion_mana", stock: 3 });
+
+inventaireBoutiquePotionsB.ajouterPotion({ id: "potion_soin", stock: 0 });
+inventaireBoutiquePotionsB.ajouterPotion({ id: "potion_force", stock: 7 });
+
+console.log("Inventaire A - Potions en stock:");
+console.table(inventaireBoutiquePotionsA.PotionsEnStock());
+
+console.log("Inventaire A - Potions en rupture:");
+console.table(inventaireBoutiquePotionsA.PotionsEnRuptureDeStock());
+
+console.log("Inventaire B - Potions en stock:");
+console.table(inventaireBoutiquePotionsB.PotionsEnStock());
+
+console.log("Inventaire B - Potions en rupture:");
+console.table(inventaireBoutiquePotionsB.PotionsEnRuptureDeStock());
