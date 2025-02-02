@@ -16,6 +16,20 @@ const inventaire = [
   },
 ];
 
+// Fonction utilitaire pour comparer deux tableaux
+const compare_tableau = (tb1, tb2) => {
+  if (tb1.length !== tb2.length) return false;
+  const tb1Trie = [...tb1].sort();
+  const tb2Trie = [...tb2].sort();
+
+  for (let i = 0; i < tb1Trie.length; i++) {
+    if (tb1Trie[i] !== tb2Trie[i]) {
+      return false;
+    }
+  }
+  return true;
+};
+
 // Exercice 1 : Salutation Aventurier
 const salutations = (nom) => {
   return console.log(`Salutations Aventurier ! Je me nomme ${nom} pour vous servir.`);
@@ -70,3 +84,41 @@ const lister_potions_indisponibles = () => {
 console.table(inventaire);
 console.table(lister_potions_disponibles());
 console.table(lister_potions_indisponibles());
+
+// Exercice 6 : Allons faire de la cueillette, nous avons besoin de plus de potions !
+const fabriquer_potion = ({ id, prix = 10, stock = 1, ingredients }) => {
+  try {
+    const potion = manuel_de_fabrication[id] || null;
+
+    if (!potion) {
+      throw new Error(`La potion "${id}" n'existe pas dans le manuel de fabrication.`);
+    }
+
+    if (!compare_tableau(potion.ingredients, ingredients)) {
+      throw new Error(`Les ingrédients fournis pour la potion "${id}" sont incorrects.`);
+    }
+
+    return { id, prix, stock };
+  } catch (error) {
+    console.error("Erreur lors de la fabrication :", error.message);
+
+    return null;
+  }
+};
+
+const nouvelles_potions = [
+  { id: "potion_soin", stock: 8, ingredients: ["eau_de_source", "ecaille_de_dragon", "poudre_de_diamant"] },
+  { id: "potion_soin", ingredients: ["eau_de_source", "ecaille_de_dragon", "dent_de_dragon"] },
+  { id: "potion_soin", ingredients: ["eau_de_source", "ecaille_de_dragon"] },
+  { id: "potion_mana", ingredients: ["eau_de_source", "ecaille_de_dragon", "poudre_de_diamant"] },
+];
+
+nouvelles_potions.forEach((p) => {
+  const potion = fabriquer_potion(p);
+
+  if (potion) {
+    ajouter(inventaire, potion);
+  }
+});
+
+console.table(inventaire);
